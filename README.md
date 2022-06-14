@@ -5,5 +5,5 @@ Fork this repo and use as the base template for your final project
 - Activate your virtual env before running
 - Fit to your project objective
 
-> The code can be improved upon and that's up to you to implement
-> Don't forget to test with postman
+> - The code can be improved upon and that's up to you to implement
+> - Don't forget to test with postman
