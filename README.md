@@ -1,4 +1,4 @@
-# project_template_stutern
+# project_template_stutern_1.1
 
 Fork this repo and use as the base template for your final project
 - Change the pickle file
