@@ -4,10 +4,19 @@ import joblib
 app = Flask(__name__)
 model = joblib.load('lr_model.pkl')
 
+#If you're using any transformation
+def transform(df):
+	"""
+	Your Transform here
+	* return df
+	"""
+	pass
+
 @app.route('/')
 @app.route('/index')
 def home():
 	""" Home View """
+
 	return (jsonify(message="Welcome Home Gees!"))
 
 @app.route('/predict', methods=['GET', 'POST'])
@@ -30,6 +39,9 @@ def predict():
 		grade = int(grade)
 		s_class = int(s_class)
 		level = int(level)
+
+		#for transform create with input data and pass df to transform function
+		#df_new = transform(df);
 
 		#make prediction
 		pred = model.predict([[age, grade, s_class, level]]).tolist()
