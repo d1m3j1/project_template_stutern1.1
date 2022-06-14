@@ -6,3 +6,4 @@ Fork this repo and use as the base template for your final project
 - Fit to your project objective
 
 > The code can be improved upon and that's up to you to implement
+> Don't forget to test with postman
