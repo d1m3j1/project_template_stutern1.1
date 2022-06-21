@@ -142,6 +142,72 @@ class Create_Dataset:
     def create_dependants(self) -> pd.DataFrame:
         self.df['Dependants'] = self.df['Marital_Status'].apply(lambda x : np.random.randint(0,6) if x == 'Married' else np.random.randint(0,2))
         return self.df
+ 
+    def create_get_score(self) -> pd.DataFrame:
+        for index, row in self.df.iterrows():
+            c1 = 0
+            c2 = 0
+            c3 = 0
+            c4 = 0 
+            c5 = 0
+            c6 = 0
+            c7 = 0
+            c8 = 0
+            c9 = 0
+            score = 0
+
+            if (row['Occupation Status'] == 'Employed'):
+                c1 = 3
+            elif (row['Occupation Status'] == 'Self Employed'): 
+                c1 = 2
+            c1 = 1
+
+            if (row['Education'] == 'Graduate'):
+                c2 = 5
+            c2 = 2
+
+            if (row['Marital_Status'] == 'Married'):
+                c3 = 4
+            c3 = 2 
+
+            if (row['Dependants'] == 0):
+                c4 = 5
+            elif (row['Dependants'] == 1):
+                c4 = 4
+            elif (row['Dependants'] == 2):
+                c4 = 3 
+            c4 = 2
+
+            if (row['Salary'] > 0):
+                c5 = row['Salary'] / 10000
+            
+            if (row['State_Code'] == 5): 
+                c6 = 5
+            elif (row['State_Code'] == 4):
+                c6 = 4
+            elif (row['State_Code'] == 3): 
+                c6 = 3
+            c6 = 2 
+
+            if (row['Current Loan'] == True):
+                c7 = 0
+            elif ((row['Previous Loans'] ==1) and (row['Defaulted'] == True)):
+                c7 = 0
+            elif ((row['Previous Loans'] > 0) and (row['Defaulted'] == False)):
+                c7 = 5
+            c7 = 3
+            
+            c8 = c1+c2+c3+c4
+            c9 = c5*c6*c7
+            score = c8*c9
+
+            self.df.loc[[index], 'newscore'] = score
+
+        return self.df
+
+    def create_get_target_data(self)  -> pd.DataFrame:  
+        self.df['Status'] = self.df['newscore'].apply(lambda x: 1 if x > 500 else 0)
+        return self.df
 
     def create_data(self, save = False) -> pd.DataFrame:
         self.create_unique_id()
