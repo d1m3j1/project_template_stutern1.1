@@ -6,7 +6,8 @@ import pandas as pd
 
 num_users = 100000
 features = ['ID','Gender','Marital_Status', 'Dependants', 'Education','Occupation_Status','Age',\
-            'State','State_Code', 'Salary','Current_Loan','Tenure','Previous_Loans','Defaulted','Default_Dur']
+            'State','State_Code', 'Salary','Current_Loan','Loan_Amount', 'Tenure',\
+            'Previous_Loans','Defaulted','Default_Dur', 'newscore', 'Status']
 df = pd.DataFrame(columns = features)
 
 class Create_Dataset: 
@@ -113,6 +114,10 @@ class Create_Dataset:
         salary(self.df, 2,'Unemployed',5000,3000)
         return self.df 
 
+    def create_loan_amount(self) -> pd.DataFrame: 
+        self.df['Loan_Amnt'] = self.df['Salary'].apply(lambda x : x*0.40 if (self.df['Current_Loan'] == True).all() else 0 )
+        return self.df
+
     def create_defaulted(self) -> pd.DataFrame: 
         self.df['Defaulted'] = self.df['Previous_Loans'].apply(lambda x : random.choices([True, False], weights = [40, 60])[0] if x >= 1 else False)
         return self.df
@@ -155,7 +160,7 @@ class Create_Dataset:
             c8 = 0
             c9 = 0
             score = 0
-
+    
             if (row['Occupation Status'] == 'Employed'):
                 c1 = 3
             elif (row['Occupation Status'] == 'Self Employed'): 
@@ -217,6 +222,7 @@ class Create_Dataset:
         self.create_state()
         self.create_state_code()
         self.create_current_loan()
+        self.create_loan_amount()
         self.create_tenure()
         self.create_previous_loans()
         self.create_salary()
@@ -225,6 +231,8 @@ class Create_Dataset:
         self.create_marriage_stats()
         self.create_education()
         self.create_dependants()
+        self.create_get_score()
+        self.create_get_target_data()
         
         if save:
             self.df.to_csv('../data/auction_data.csv', index=False)
