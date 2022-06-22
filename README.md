@@ -5,6 +5,7 @@ Fork this repo and use as the base template for your final project
 - Activate your virtual env before running
 - Fit to your project objective
 - Don't forget to tranform - If needed
+- Don't forget your documentation that will be sent to the backend team
 
 > - The code can be improved upon and that's up to you to implement
 > - Don't forget to test with postman
