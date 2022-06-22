@@ -17,18 +17,18 @@ In other for user to place a bid on this website, a user is required to have a m
         0 - Not Allowed to bid
 
 ### webapp.py
-An api that allows the backend team connect with the model to get their prediction. 
-It would require parameters such as
-    -`Gender` - which is a string, writter as either Male or Female 
-    -`Married` - which takes a string as it's parameter either Yes or No 
-    -`Dependents` - which takes a integer as it's parameter either runing from 1 to infinty 
-    -`Graduate` - which takes a string as it's parameter either Yes or No
-    -`Self_Employed` - which takes a string as it's parameter either Yes or No 
-    -`Income` - which takes a integer as it's parameter requesting for the users montly income
-    -`Property_Area` - which takes a string as it's parameter either restricted to states in Nigeria 
-    -`Prev_Credit_Dur` - if the user has a previously taken loan from our site, what duration was the loan
-    -`Total_Amount_Spent` - Total amount a user has spent on our site so far.
-    -`Credit_History` - Not for the user to imput but we are to say decide for now, we leave it at 1 or 0
+- An api that allows the backend team connect with the model to get their prediction. 
+ It would require parameters such as: 
+    -`Gender` : which is a string, writter as either Male or Female 
+    -`Married` : which takes a string as it's parameter either Yes or No 
+    -`Dependents` : which takes a integer as it's parameter either runing from 1 to infinty 
+    -`Graduate` : which takes a string as it's parameter either Yes or No
+    -`Self_Employed` : which takes a string as it's parameter either Yes or No 
+    -`Income` :which takes a integer as it's parameter requesting for the users montly income
+    -`Property_Area` : which takes a string as it's parameter either restricted to states in Nigeria 
+    -`Prev_Credit_Dur` : if the user has a previously taken loan from our site, what duration was the loan
+    -`Total_Amount_Spent` : Total amount a user has spent on our site so far.
+    -`Credit_History` : Not for the user to imput but we are to say decide for now, we leave it at 1 or 0
 
     Passing all this parameters into the model, would enable the system predict what the outcome of a user is. 
 
