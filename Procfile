@@ -1,1 +1,1 @@
-web: gunicorn webapp --preload --log-file -
+web: gunicorn webapp:app --log-file -
