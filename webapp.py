@@ -39,7 +39,6 @@ def home():
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
-
 	try:
 
 		#request args
