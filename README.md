@@ -28,7 +28,7 @@ In other for user to place a bid on this website, a user is required to have a m
     7. `Property_Area` : which takes a string as it's parameter either restricted to states in Nigeria 
     8. `Prev_Credit_Dur` : if the user has a previously taken loan from our site, what duration was the loan
     9. `Total_Amount_Spent` : Total amount a user has spent on our site so far.
-    10. `Credit_History` : Not for the user to imput but we are to say decide for now, we leave it at 1 or 0
+    10. `Credit_History` : Previous credit Takes an Input of Yes or No which is if the user has previously taken credit from us
 
     Passing all this parameters into the model, would enable the system predict what the outcome of a user is. 
 

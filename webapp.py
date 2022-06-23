@@ -5,20 +5,6 @@ import joblib
 app = Flask(__name__)
 model = joblib.load('auction_model.pkl')
 
-#If you're using any transformation
-def handle_data(df):
-	def state(df) -> pd.DataFrame:
-		if (df['State'] == 'Abuja') | (df['State'] == 'Lagos') | (df['State'] == 'Port Harcourt'):
-			return 'Urban'
-		elif (df['State'] == 'Kano') | (df['State'] == 'Kwara') | (df['State'] == 'Oyo') | (df['State'] == 'Ogun') | (df['State'] == 'Cross River') | (df['State'] == 'Imo'):
-			return 'Semiurban'
-		else: 
-			return 'Rural'
-		
-	df['Property_Area'] = [state(i) for i in df['State']]
-	df.drop('State', axis = 1, inplace = True)
-	return df
-
 @app.route('/')
 @app.route('/index')
 def home():
@@ -38,12 +24,17 @@ def predict():
 	Graduate = request.args.get('Graduate')
 	Self_Employed = request.args.get('Self_Employed')
 	Income = request.args.get('Income')
-	Property_Area = request.args.get('Property_Area')
+	state = request.args.get('Property_Area')
+	if (state == 'Abuja') | (state == 'Lagos') | (state == 'Port Harcourt'):
+		Property_Area = 'Urban'
+	elif (state == 'Kano') | (state == 'Kwara') | (state == 'Oyo') | (state == 'Ogun') | (state == 'Cross River') | (state['State'] == 'Imo'):
+		Property_Area ='Semiurban'
+	else: 
+		Property_Area ='Rural'
 	Prev_Credit_Dur = request.args.get('Prev_Credit_Dur')
 	Total_Amount_Spent = request.args.get('Total_Amount_Spent')
 	Credit_History = request.args.get('Credit_History')
 	
-
 	#cast to required datatypes
 	Gender = str(Gender)
 	Married = str(Married)
