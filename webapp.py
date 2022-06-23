@@ -33,7 +33,11 @@ def predict():
 		Property_Area ='Rural'
 	Prev_Credit_Dur = request.args.get('Prev_Credit_Dur')
 	Total_Amount_Spent = request.args.get('Total_Amount_Spent')
-	Credit_History = request.args.get('Credit_History')
+	hist = request.args.get('Credit_History')
+	if hist == 'Yes': 
+		Credit_History == 1
+	else : 
+		Credit_History == 0 
 	
 	#cast to required datatypes
 	Gender = str(Gender)
