@@ -1,16 +1,23 @@
 from flask import Flask, request, jsonify
+import pandas as pd
 import joblib
 
 app = Flask(__name__)
-model = joblib.load('lr_model.pkl')
+model = joblib.load('auction_model.pkl')
 
 #If you're using any transformation
-def transform(df):
-	"""
-	Your Transform here
-	* return df
-	"""
-	pass
+def handle_data(df):
+	def state(df) -> pd.DataFrame:
+		if (df['State'] == 'Abuja') | (df['State'] == 'Lagos') | (df['State'] == 'Port Harcourt'):
+			return 'Urban'
+		elif (df['State'] == 'Kano') | (df['State'] == 'Kwara') | (df['State'] == 'Oyo') | (df['State'] == 'Ogun') | (df['State'] == 'Cross River') | (df['State'] == 'Imo'):
+			return 'Semiurban'
+		else: 
+			return 'Rural'
+		
+	df['Property_Area'] = [state(i) for i in df['State']]
+	df.drop('State', axis = 1, inplace = True)
+	return df
 
 @app.route('/')
 @app.route('/index')
@@ -21,34 +28,44 @@ def home():
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
-	"""
-	Predict View
 
-	Fit to suit your data/features
-	"""
 	try:
 
 		#request args
-		age = request.args.get('age')
-		grade = request.args.get('grade')
-		s_class = request.args.get('class')
-		level = request.args.get('level')
+		Gender = request.args.get('Gender')
+		Married = request.args.get('Married')
+		Dependents = request.args.get('Dependents')
+		Graduate = request.args.get('Graduate')
+		Self_Employed = request.args.get('Self_Employed')
+		Income = request.args.get('Income')
+		Property_Area = request.args.get('Property_Area')
+		Prev_Credit_Dur = request.args.get('Prev_Credit_Dur')
+		Total_Amount_Spent = request.args.get('Total_Amount_Spent')
+		Credit_History = request.args.get('Credit_History')
+		
 
-		#cast to int
-		age = int(age)
-		grade = int(grade)
-		s_class = int(s_class)
-		level = int(level)
+		#cast to required datatypes
+		Gender = str(Gender)
+		Married = str(Married)
+		Dependents = int(Dependents)
+		Graduate = str(Graduate)
+		Self_Employed = str(Self_Employed)
+		Income = int(Income)
+		Property_Area = str(Property_Area)
+		Prev_Credit_Dur = float(Prev_Credit_Dur)
+		Total_Amount_Spent = float(Total_Amount_Spent)
+		Credit_History = float(Credit_History)
 
 		#for transform create with input data and pass df to transform function
 		#df_new = transform(df);
 
 		#make prediction
-		pred = model.predict([[age, grade, s_class, level]]).tolist()
+		pred = model.predict([[Gender,Married,Dependents,Graduate,Self_Employed,Income,Property_Area,
+							Prev_Credit_Dur,Total_Amount_Spent,Credit_History]]).tolist()
 		return(jsonify(prediction=pred))
 	except:
 		return {"message":"ERROR!"}, 400
 
 if __name__=="__main__":
 	#debug=False for production use
-	app.run(debug=True)
+	app.run(debug=True, host='0.0.0.0', port=9001)
