@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 app = Flask(__name__)
-model = joblib.load('auction_model.pkl')
+model = joblib.load('model/auction_model.pkl')
 
 
 @app.route('/')
@@ -11,7 +11,7 @@ model = joblib.load('auction_model.pkl')
 def home():
 	""" Home View """
 
-	return (jsonify(message="Welcome Home Gees!"))
+	return (jsonify(message="Welcome To GalleryOne Home Page!"))
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
@@ -30,17 +30,17 @@ def predict():
 			Property_Area = 'Urban'
 		elif state in ['Kano','Kwara', 'Oyo' , 'Ogun' , 'Cross River', 'Imo']:
 			Property_Area ='Semiurban'
-		else: 
+		else:
 			Property_Area ='Rural'	
 		Prev_Credit_Dur = request.args.get('Prev_Credit_Dur')
 		Total_Amount_Spent = request.args.get('Total_Amount_Spent')
 		hist = request.args.get('Credit_History')
 		if hist in ['Yes']:
 			Credit_History = 1
-		else : 
+		else: 
 			Credit_History = 0
 		
-		#cast to required datatypes
+		#cast to required datatypes  
 		Gender = str(Gender)
 		Married = str(Married)
 		Dependents = int(Dependents)
@@ -50,11 +50,12 @@ def predict():
 		Property_Area = str(Property_Area)
 		Prev_Credit_Dur = int(Prev_Credit_Dur)
 		Total_Amount_Spent = float(Total_Amount_Spent)
-		Credit_History = str(Credit_History)
+		Credit_History = int(Credit_History)
 
-		#make prediction
+		# #make prediction
 		pred = model.predict([[Gender,Married,Dependents,Graduate,Self_Employed,Income,Property_Area, Prev_Credit_Dur,Total_Amount_Spent,Credit_History]]).tolist()
-		return(jsonify(prediction=pred))
+		return(jsonify(prediction=pred[0]))
+
 	except:
 		return {"message":"ERROR!"}, 400
 
