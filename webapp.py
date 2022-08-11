@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 app = Flask(__name__)
-model = joblib.load('model/auction_model.pkl')
+model = joblib.load('auction_model.pkl')
 
 
 @app.route('/')
